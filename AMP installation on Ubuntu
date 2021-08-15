@@ -1,0 +1,36 @@
+### Open Ubuntu version 20.04 on Oracle Virtual Box
+
+### Upgrading exsting setup
+$sudo apt update
+$sudo apt upgrade
+
+### Apache2 installation
+$sudo apt install apache2
+$sudo service apache2 start
+
+### MySQL installation
+$sudo apt install musql-server
+$sudo mysql-secure-installation
+
+### PHP installation
+$sudo apt install php php-mysql
+$sudo nano /var/www/html/info.php
+# Type: <?php phpinfo(); ?>, write out, save and exit
+$sudo service apache2 restart
+
+### Phpmyadmin installaion
+$sudo apt install phpmyadmin
+# Set 'apache2' as web server
+# Choose 'Yes' for setting dbconfig-common as phpmyadmin database
+$sudo nano /etc/apahe2/apache2.conf
+# Type at the end of the file: Include /etc/phpmyadmin/apache.conf, write out, save and exit
+# Check installation on web browser: localhost/phpmyadmin
+
+### MySQL account creation
+$sudo mysql -u root -p
+mysql> create user 'test.id'@'%'identified by 'any password you want to use to log onto phpmyadmin';
+mysql> grant all privileges on *.* to 'test.id'@'%';
+mysql> Exit
+
+### Log onto phpmyadmin with username: test.id and password: the password you set at MySQL account creation step
+
