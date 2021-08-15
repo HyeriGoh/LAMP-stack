@@ -1,0 +1,58 @@
+### Ubuntu 20.04 
+
+$mysql -u test.id -p
+mysql> CREATE DATABASE testdb1 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+mysql> USE testdb1
+
+mysql> CREATE TABLE test_boats(
+-> bid int primary key,
+-> bname varchar(50) not null,
+-> color varchar(50) not null
+->);
+
+mysql> CREATE TABLE test_sailors(
+-> sid int primary key,
+-> sname varchar(50) not null,
+-> rating int not null,
+-> age decimal not null
+->);
+
+mysql> CREATE TABLE test_reserves(
+-> sid int not null,
+-> bid int not null,
+-> reserve_date date not null,
+-> primarykey(bid, sid),
+-> CONSTRAINT fk_bid FOREIGN KEY(bid) REFERENCES test_boats(bid),
+-> CONSTRAINT fk_sid FOREIGN KEY(sid) REFERENCES test_sailors(sid),
+->);
+
+mysql> INSERT INTO test_boats(bid, bname, color)
+    -> VALUES('101', 'interlake', 'blue'),
+    -> ('102', 'interlake', 'red'),
+    -> ('103', 'clipper', 'green'),
+    -> ('104', 'marine', 'red');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO test_sailors(sid, sname, rating, age)
+    -> VALUES('1', 'santa', '10', '45'),
+    -> ('2', 'shelly', '3', '30.5'),
+    -> ('3', 'shelly', '7', '45'),
+    -> ('22', 'dustin', '7', '45'),
+    -> ('31', 'lubber', '8', '55.5'),
+    -> ('58', 'rusty', '7', '35');
+Query OK, 6 rows affected, 2 warnings (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 2
+
+mysql> INSERT INTO test_reserves(sid, bid, reserve_date)
+    -> VALUES('22', '101', '1996-10-10'),
+    -> ('58', '103', '1996-11-12'),
+    -> ('1', '101', '1996-01-10'),
+    -> ('1', '103', '1996-02-12'),
+    -> ('2', '101', '1996-03-10'),
+    -> ('2', '103', '1996-04-12'),
+    -> ('2', '104', '1996-05-10'),
+    -> ('3', '103', '1996-06-12');
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
